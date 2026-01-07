@@ -1,0 +1,3 @@
+enum Status { LOADING, COMPLETED, ERROR }
+
+enum Looks { LOADING, COMPLETED, ERROR }
