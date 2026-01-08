@@ -31,9 +31,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.appRoutes(),
+      theme: themeController.lightTheme,
+      darkTheme: themeController.darkTheme,
+      themeMode: themeController.isDarkMode.value
+          ? ThemeMode.dark
+          : ThemeMode.light,
     );
   }
 }

@@ -1,9 +1,11 @@
+import 'package:dsa/res/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../res/color/app_colors.dart';
 import '../../../res/fonts/app_fonts.dart';
 import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart';
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
 class QuickActionsCard extends StatelessWidget {
   const QuickActionsCard({super.key});
@@ -12,15 +14,15 @@ class QuickActionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserCibilScoreController controller =
         Get.find<UserCibilScoreController>();
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 10),
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,18 +36,12 @@ class QuickActionsCard extends StatelessWidget {
                 children: const [
                   Text(
                     'Quick Actions',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   SizedBox(height: 2),
                   Text(
                     'Instant access to your credit tools',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(fontSize: 11, color: Colors.grey),
                   ),
                 ],
               ),
@@ -88,10 +84,7 @@ class QuickActionsCard extends StatelessWidget {
 
               final uri = Uri.parse(pdfUrl);
 
-              if (!await launchUrl(
-                uri,
-                mode: LaunchMode.externalApplication,
-              )) {
+              if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
                 Get.snackbar(
                   'Error',
                   'Unable to open PDF',
@@ -109,7 +102,12 @@ class QuickActionsCard extends StatelessWidget {
             icon: Icons.trending_up,
             title: 'Check Loan Eligibility',
             subtitle: 'Verify Approval Chances',
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(
+                RouteName.loanEligibiity,
+                arguments: controller.userId,
+              );
+            },
           ),
 
           const SizedBox(height: 12),

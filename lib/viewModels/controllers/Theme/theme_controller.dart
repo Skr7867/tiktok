@@ -41,11 +41,11 @@ class ThemeController extends GetxController {
   ThemeData get darkTheme => ThemeData(
     scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
     primaryColor: AppColors.loginContainerColor,
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       bodyLarge: TextStyle(color: AppColors.whiteColor),
       bodyMedium: TextStyle(color: AppColors.whiteColor),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: AppColors.loginContainerColor,
       foregroundColor: AppColors.whiteColor,
     ),

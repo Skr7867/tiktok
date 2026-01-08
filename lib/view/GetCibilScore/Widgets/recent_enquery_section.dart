@@ -1,7 +1,10 @@
+import 'package:dsa/res/fonts/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../res/color/app_colors.dart';
 import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart';
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
 class RecentEnquiriesSection extends StatelessWidget {
   const RecentEnquiriesSection({super.key});
@@ -10,12 +13,13 @@ class RecentEnquiriesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserCibilScoreController controller =
         Get.find<UserCibilScoreController>();
-
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
         borderRadius: BorderRadius.circular(14),
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
       ),
@@ -25,7 +29,11 @@ class RecentEnquiriesSection extends StatelessWidget {
           /// 🔹 TITLE (UNCHANGED)
           const Text(
             'Recent Enquiries',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              fontFamily: AppFonts.opensansRegular,
+            ),
           ),
           const SizedBox(height: 10),
 
@@ -42,7 +50,10 @@ class RecentEnquiriesSection extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 10),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
+                  color: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
+                  border: Border.all(
+                    color: AppColors.greyColor.withOpacity(0.4),
+                  ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -64,8 +75,11 @@ class RecentEnquiriesSection extends StatelessWidget {
                             enquery.purpose.toString(),
                             style: TextStyle(
                               fontSize: 11,
-
+                              fontFamily: AppFonts.opensansRegular,
                               fontWeight: FontWeight.w600,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
                             ),
                           ),
                         ),

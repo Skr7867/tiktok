@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../data/hive/loginResponse/login_response_hive.dart';
 import '../../res/color/app_colors.dart';
 import '../../res/listitem/list_item.dart';
+import '../../viewModels/controllers/Theme/theme_controller.dart';
 import '../Logout/log_out_dialog_box.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -96,7 +98,12 @@ class _HomeScreenState extends State<HomeScreen>
 
                   return Text(
                     'Welcome back, $name! 👋',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: TextStyle(
+                      fontFamily: AppFonts.opensansRegular,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
                   );
                 },
               ),
@@ -111,6 +118,7 @@ class _HomeScreenState extends State<HomeScreen>
                 style: TextStyle(
                   fontSize: 12,
                   fontFamily: AppFonts.opensansRegular,
+                  color: AppColors.greyColor,
                 ),
               ),
             ),
@@ -221,7 +229,10 @@ class _HomeScreenState extends State<HomeScreen>
                 drawVerticalLine: false,
                 horizontalInterval: 1,
                 getDrawingHorizontalLine: (value) {
-                  return FlLine(color: Colors.grey.shade200, strokeWidth: 1);
+                  return FlLine(
+                    color: AppColors.greyColor.withOpacity(0.4),
+                    strokeWidth: 1,
+                  );
                 },
               ),
               titlesData: FlTitlesData(
@@ -236,6 +247,7 @@ class _HomeScreenState extends State<HomeScreen>
                           style: TextStyle(
                             color: Colors.grey.shade600,
                             fontSize: 11,
+                            fontFamily: AppFonts.opensansRegular,
                           ),
                         );
                       } else if (selectedMetric ==
@@ -292,6 +304,7 @@ class _HomeScreenState extends State<HomeScreen>
                             style: TextStyle(
                               color: Colors.grey.shade600,
                               fontSize: 11,
+                              fontFamily: AppFonts.opensansRegular,
                             ),
                           ),
                         );
@@ -325,6 +338,7 @@ class _HomeScreenState extends State<HomeScreen>
                         const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontFamily: AppFonts.opensansRegular,
                         ),
                       );
                     }).toList();
@@ -501,148 +515,165 @@ class _HomeScreenState extends State<HomeScreen>
     required Color iconColor,
     required DashboardMetric metric,
   }) {
+    final themeController = Get.find<ThemeController>();
     final isSelected = selectedMetric == metric;
+    return Obx(() {
+      final bool isDark = themeController.isDarkMode.value;
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            selectedMetric = metric;
+            _animationController.reset();
+            _animationController.forward();
+          });
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.blackColor : AppColors.whiteColor,
+            borderRadius: BorderRadius.circular(16),
+            border: isSelected
+                ? Border.all(color: iconColor, width: 2)
+                : Border.all(color: Colors.transparent, width: 2),
+            boxShadow: [
+              BoxShadow(
+                color: isSelected
+                    ? iconColor.withOpacity(0.2)
+                    : Colors.black.withOpacity(0.15),
+                blurRadius: isSelected ? 12 : 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: iconColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(icon, color: iconColor, size: 22),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      change,
+                      style: TextStyle(
+                        color: Colors.green.shade700,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: AppFonts.opensansRegular,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 11,
+                  color: iconColor,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                  fontFamily: AppFonts.opensansRegular,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: -0.5,
+                  fontFamily: AppFonts.opensansRegular,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.grey.shade500,
+                  fontFamily: AppFonts.opensansRegular,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
 
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedMetric = metric;
-          _animationController.reset();
-          _animationController.forward();
-        });
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.all(16),
+  Widget _cardContainer({required String title, required Widget child}) {
+    final themeController = Get.find<ThemeController>();
+
+    return Obx(() {
+      final bool isDark = themeController.isDarkMode.value;
+      return Container(
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? AppColors.blackColor : AppColors.whiteColor,
           borderRadius: BorderRadius.circular(16),
-          border: isSelected
-              ? Border.all(color: iconColor, width: 2)
-              : Border.all(color: Colors.transparent, width: 2),
           boxShadow: [
             BoxShadow(
-              color: isSelected
-                  ? iconColor.withOpacity(0.2)
-                  : Colors.black.withOpacity(0.05),
-              blurRadius: isSelected ? 12 : 8,
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 10,
               offset: const Offset(0, 4),
             ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  width: 4,
+                  height: 20,
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
+                    color: _getMetricColor(),
+                    borderRadius: BorderRadius.circular(2),
                   ),
-                  child: Icon(icon, color: iconColor, size: 22),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.green.shade50,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    change,
-                    style: TextStyle(
-                      color: Colors.green.shade700,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                    ),
+                const SizedBox(width: 12),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontFamily: AppFonts.opensansRegular,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                letterSpacing: -0.5,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+            const SizedBox(height: 8),
+            child,
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _cardContainer({required String title, required Widget child}) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 20,
-                decoration: BoxDecoration(
-                  color: _getMetricColor(),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontFamily: AppFonts.opensansRegular,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          child,
-        ],
-      ),
-    );
+      );
+    });
   }
 
   Widget _buildDrawer(BuildContext context) {
+    final ThemeController themeController = Get.find<ThemeController>();
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -665,10 +696,11 @@ class _HomeScreenState extends State<HomeScreen>
                     leading: const CircleAvatar(child: Icon(Icons.person)),
                     title: Text(
                       profile?.name ?? 'Guest User',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         fontFamily: AppFonts.opensansRegular,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     subtitle: Text(
@@ -676,6 +708,7 @@ class _HomeScreenState extends State<HomeScreen>
                       style: const TextStyle(
                         fontSize: 15,
                         fontFamily: AppFonts.opensansRegular,
+                        color: AppColors.greyColor,
                       ),
                     ),
                   ),
@@ -693,9 +726,85 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             _buildDrawerItem(
               context,
-              icon: Icons.calculate,
-              title: 'Loan Offers',
-              onTap: () {},
+              icon: Icons.sunny,
+              title: 'Theme',
+              value: themeController.isDarkMode.value
+                  ? 'dark_mode'.tr
+                  : 'light_mode'.tr,
+              onTap: () {
+                Get.bottomSheet(
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Select Theme',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                            fontFamily: AppFonts.opensansRegular,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        ListTile(
+                          leading: Icon(
+                            PhosphorIconsRegular.moon,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                          ),
+                          title: Text(
+                            'Dark Mode',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
+                              fontFamily: AppFonts.opensansRegular,
+                            ),
+                          ),
+                          onTap: () {
+                            if (!themeController.isDarkMode.value) {
+                              themeController.switchTheme();
+                            }
+                            Get.back();
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            PhosphorIconsRegular.sun,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                          ),
+                          title: Text(
+                            'Light Mode',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
+                              fontFamily: AppFonts.opensansRegular,
+                            ),
+                          ),
+                          onTap: () {
+                            if (themeController.isDarkMode.value) {
+                              themeController.switchTheme();
+                            }
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  isScrollControlled: true,
+                );
+              },
             ),
             _buildDrawerItem(
               context,
@@ -729,6 +838,7 @@ class _HomeScreenState extends State<HomeScreen>
     required IconData icon,
     required String title,
     required VoidCallback onTap,
+    String? value,
     bool isLogout = false,
   }) {
     return ListTile(

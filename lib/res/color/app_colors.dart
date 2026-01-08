@@ -6,7 +6,7 @@ class AppColors {
   static const Color buttonColor = Color(0xFF4834d4);
   static const Color blueShade = Color.fromARGB(255, 120, 131, 146);
   static const Color whiteColor = Color(0xffffffff);
-  static const Color loginContainerColor = Color(0xffFAFAFA);
+  static const Color loginContainerColor = Color.fromARGB(255, 255, 253, 253);
   static const Color textfieldColor = Color(0xffEAEAF0);
   static const Color textColor = Color(0xff79808B);
   static Color greenColor = Colors.green;

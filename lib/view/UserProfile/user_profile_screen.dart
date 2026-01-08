@@ -9,6 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../utils/document_opener.dart';
 import '../../utils/utils.dart';
+import '../../viewModels/controllers/Theme/theme_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -147,7 +148,7 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.badge,
                   title: 'Registration type',
                   value: profile?.registrationType ?? 'Professional Partner',
-                  color: Colors.black,
+                  color: Colors.blue,
                 ),
                 _infoCard(
                   icon: Icons.location_on,
@@ -403,12 +404,15 @@ class ProfileScreen extends StatelessWidget {
     required String value,
     required Color color,
   }) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.08),
+          // color: color.withOpacity(0.08),
+          color: isDark ? AppColors.blackColor : color.withOpacity(0.08),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(

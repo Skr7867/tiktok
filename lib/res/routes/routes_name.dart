@@ -12,4 +12,5 @@ class RouteName {
   static const String notificationScreen = '/NotificationScren';
   static const String profileScreen = '/ProfileScreen';
   static const String emiCalculators = '/EMICalculators';
+  static const String loanEligibiity = '/LoanEligibility';
 }

@@ -10,6 +10,8 @@ import 'package:dsa/view/UserProfile/user_profile_screen.dart';
 import 'package:get/get.dart';
 import '../../view/GetCibilScore/LoanAccounts/loan_account_screen.dart';
 import '../../view/GetCibilScore/get_cibil_score_screen.dart';
+import '../../view/LoanEligibility/loan_eligibility_screen.dart'
+    show CustomerLoanOverviewScreen;
 import '../../view/RegisterUser/register_user_screen.dart';
 import '../../view/Splash/splash_screen.dart';
 import '../../view/noInternet/network_base_screen.dart';
@@ -92,6 +94,12 @@ class AppRoutes {
     GetPage(
       name: RouteName.emiCalculators,
       page: () => NetworkBasePage(child: EmiCalculatorScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.loanEligibiity,
+      page: () => NetworkBasePage(child: CustomerLoanOverviewScreen()),
       transitionDuration: Duration(microseconds: 500),
       transition: Transition.rightToLeftWithFade,
     ),

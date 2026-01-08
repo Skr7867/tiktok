@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../res/color/app_colors.dart';
 import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart';
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 import 'summary_tiles_widget.dart';
 
 class CibilSummaryCards extends StatelessWidget {
@@ -11,6 +13,8 @@ class CibilSummaryCards extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserCibilScoreController controller =
         Get.find<UserCibilScoreController>();
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Column(
       children: [
         SummaryTile(
@@ -18,7 +22,7 @@ class CibilSummaryCards extends StatelessWidget {
           value: controller.cibilScore.value!.report!.summary!.totalActiveLoans!
               .toString(),
           icon: Icons.account_balance,
-          bgColor: Color(0xFFF1F7FF),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.blue,
         ),
         SummaryTile(
@@ -31,7 +35,7 @@ class CibilSummaryCards extends StatelessWidget {
               .totalActiveCreditCards!
               .toString(),
           icon: Icons.credit_card,
-          bgColor: Color(0xFFF1FFF6),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.green,
         ),
         SummaryTile(
@@ -44,7 +48,7 @@ class CibilSummaryCards extends StatelessWidget {
               .totalLoanOutstanding!
               .toString(),
           icon: Icons.currency_rupee,
-          bgColor: Color(0xFFF9F5FF),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.purple,
         ),
         SummaryTile(
@@ -57,7 +61,7 @@ class CibilSummaryCards extends StatelessWidget {
               .totalCardOutstanding!
               .toString(),
           icon: Icons.credit_card_outlined,
-          bgColor: Color(0xFFFFF6EB),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.deepOrange,
         ),
         SummaryTile(
@@ -70,7 +74,7 @@ class CibilSummaryCards extends StatelessWidget {
               .overduePaymentsCount!
               .toString(),
           icon: Icons.warning_amber_rounded,
-          bgColor: Color(0xFFFFF1F1),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.red,
         ),
         SummaryTile(
@@ -83,7 +87,7 @@ class CibilSummaryCards extends StatelessWidget {
               .ageOfOldestAccount!
               .toString(),
           icon: Icons.calendar_month,
-          bgColor: Color(0xFFF1F5FF),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.blue,
         ),
 
@@ -97,7 +101,7 @@ class CibilSummaryCards extends StatelessWidget {
               .recentEnquiriesCount3m!
               .toString(),
           icon: Icons.search,
-          bgColor: Color.fromARGB(255, 253, 242, 241),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.orange,
         ),
         SummaryTile(
@@ -105,7 +109,7 @@ class CibilSummaryCards extends StatelessWidget {
           value: controller.cibilScore.value!.report!.summary!.totalAccounts!
               .toString(),
           icon: Icons.layers,
-          bgColor: Color(0xFFF1F5FF),
+          bgColor: isDark ? AppColors.blackColor : Color(0xFFF1F7FF),
           valueColor: Colors.teal,
         ),
       ],

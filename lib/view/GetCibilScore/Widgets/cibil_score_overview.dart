@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../res/color/app_colors.dart';
 import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart';
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
 class CibilScoreOverview extends StatelessWidget {
   final int score;
@@ -40,11 +41,14 @@ class CibilScoreOverview extends StatelessWidget {
     final UserCibilScoreController controller =
         Get.find<UserCibilScoreController>();
 
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
+
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10)],
       ),
@@ -53,7 +57,11 @@ class CibilScoreOverview extends StatelessWidget {
           /// TITLE
           const Text(
             'CIBIL Score Overview',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              fontFamily: AppFonts.opensansRegular,
+            ),
           ),
 
           const SizedBox(height: 20),

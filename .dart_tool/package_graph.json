@@ -23,6 +23,7 @@
         "http",
         "http_parser",
         "path_provider",
+        "phosphor_flutter",
         "url_launcher"
       ],
       "devDependencies": [
@@ -106,6 +107,13 @@
         "hive",
         "source_gen",
         "source_helper"
+      ]
+    },
+    {
+      "name": "phosphor_flutter",
+      "version": "2.1.0",
+      "dependencies": [
+        "flutter"
       ]
     },
     {
