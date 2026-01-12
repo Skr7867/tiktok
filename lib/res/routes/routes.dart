@@ -3,6 +3,7 @@ import 'package:dsa/view/EmiCalculators/emi_calculators_screen.dart';
 import 'package:dsa/view/FetchLoading/fetch_loading_screen.dart';
 import 'package:dsa/view/GetCibilScore/summary_screen.dart';
 import 'package:dsa/view/Home/home_screen.dart';
+import 'package:dsa/view/LoanEligibility/widgets/check_customer_loan_eligibility.dart';
 import 'package:dsa/view/Login/login_screen.dart';
 import 'package:dsa/view/Notification/notification_screen.dart';
 import 'package:dsa/view/Register/register_screen.dart';
@@ -100,6 +101,12 @@ class AppRoutes {
     GetPage(
       name: RouteName.loanEligibiity,
       page: () => NetworkBasePage(child: CustomerLoanOverviewScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.checkCustomerLoanEligibility,
+      page: () => NetworkBasePage(child: CheckCustomerLoanEligibility()),
       transitionDuration: Duration(microseconds: 500),
       transition: Transition.rightToLeftWithFade,
     ),

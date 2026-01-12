@@ -19,6 +19,7 @@ class LoanListController extends GetxController {
 
   /// FILTER
   final RxString selectedFilter = 'All Applications'.obs;
+  final RxString searchQuery = ''.obs;
 
   /// USER
   late final String userId;
@@ -59,5 +60,9 @@ class LoanListController extends GetxController {
 
   void updateFilter(String filter) {
     selectedFilter.value = filter;
+  }
+
+  void updateSearch(String value) {
+    searchQuery.value = value.trim().toLowerCase();
   }
 }
