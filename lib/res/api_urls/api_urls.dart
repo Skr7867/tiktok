@@ -25,6 +25,9 @@ class ApiUrls {
   static const String registeredUserApi =
       '$baseUrl/api/dealer/getRegisteredUsers';
   static const String userProfile = '$baseUrl/api/partner/profile';
-
   static const String loanListApi = '$baseUrl/api/loanRequest/user';
+  static const String checkLoanEligibilityStage1Api =
+      '$baseUrl/api/loanRequest/stage1';
+
+  static const String loanApplicationDetailsApi = '$baseUrl/api/loanRequest';
 }

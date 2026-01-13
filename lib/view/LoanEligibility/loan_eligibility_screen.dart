@@ -1,5 +1,6 @@
 import 'package:dsa/res/custom_widgets/custome_appbar.dart';
 import 'package:dsa/res/fonts/app_fonts.dart';
+import 'package:dsa/res/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../viewModels/controllers/LoanList/loan_list_controller.dart';
@@ -126,7 +127,9 @@ class CustomerLoanOverviewScreen extends StatelessWidget {
         ],
       ),
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(RouteName.checkCustomerLoanEligibility);
+        },
         icon: const Icon(Icons.add_circle_outline, size: 22),
         label: const Text(
           "New Application",

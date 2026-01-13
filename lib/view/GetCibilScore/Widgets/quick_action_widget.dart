@@ -1,4 +1,3 @@
-import 'package:dsa/res/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -96,20 +95,18 @@ class QuickActionsCard extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          /// CHECK LOAN ELIGIBILITY
           _actionTile(
             color: AppColors.blueColor,
             icon: Icons.trending_up,
-            title: 'Check Loan Eligibility',
-            subtitle: 'Verify Approval Chances',
+            title: 'CAM Report ',
+            subtitle: 'Approval & Risk Assesment',
             onTap: () {
-              Get.toNamed(
-                RouteName.loanEligibiity,
-                arguments: controller.userId,
-              );
+              // Get.toNamed(
+              //   RouteName.loanEligibiity,
+              //   arguments: controller.userId,
+              // );
             },
           ),
-
           const SizedBox(height: 12),
 
           /// REFRESH CIBIL

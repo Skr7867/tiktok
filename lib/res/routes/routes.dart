@@ -1,3 +1,4 @@
+import 'package:dsa/view/ApplicationDetails/application_details_screen.dart';
 import 'package:dsa/view/CustomerRegistration/customer_registration.dart';
 import 'package:dsa/view/EmiCalculators/emi_calculators_screen.dart';
 import 'package:dsa/view/FetchLoading/fetch_loading_screen.dart';
@@ -106,7 +107,13 @@ class AppRoutes {
     ),
     GetPage(
       name: RouteName.checkCustomerLoanEligibility,
-      page: () => NetworkBasePage(child: CheckCustomerLoanEligibility()),
+      page: () => NetworkBasePage(child: CheckEligibilityScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.applicationDetailsScreen,
+      page: () => NetworkBasePage(child: ApplicationDetailsScreen()),
       transitionDuration: Duration(microseconds: 500),
       transition: Transition.rightToLeftWithFade,
     ),

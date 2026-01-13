@@ -6,7 +6,6 @@ import 'package:dsa/view/Home/widgets/high_credit_score_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../data/hive/loginResponse/login_response_hive.dart';
@@ -50,14 +49,14 @@ class _HomeScreenState extends State<HomeScreen>
 
   String _getChartTitle() {
     switch (selectedMetric) {
-      case DashboardMetric.totalCustomers:
-        return 'Total Customers - Monthly Growth';
+      case DashboardMetric.conversionRate:
+        return 'Conversion Rate - Monthly Trend';
       case DashboardMetric.eligibleCustomers:
         return 'Eligible Customers - Monthly Trend';
       case DashboardMetric.totalEarnings:
         return 'Total Earnings - Monthly Performance';
       default:
-        return 'Conversion Rate - Monthly Trend';
+        return 'Total Customers - Monthly Growth';
     }
   }
 

@@ -4,3 +4,5 @@ enum DashboardMetric {
   conversionRate,
   totalEarnings,
 }
+
+enum LoanTab { overview, financials, paymentHistory, existingLoans, documents }

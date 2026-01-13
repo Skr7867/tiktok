@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../res/color/app_colors.dart';
 import '../../viewModels/controllers/EmiCalculators/emi_calculators_controller.dart';
+import '../../viewModels/controllers/Theme/theme_controller.dart';
 import 'widgets/emi_pie_chart.dart';
 import 'widgets/payment_summary_card.dart';
 
@@ -18,59 +19,63 @@ class EmiCalculatorScreen extends StatelessWidget {
     final isTablet = screenWidth > 600;
 
     return Scaffold(
-      backgroundColor: const Color(0xffF5F7FB),
       appBar: CustomAppBar(
         title: 'EMI Calculator',
         automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(isTablet ? 20 : 16),
-        child: Column(
-          children: [
-            // Loan Details Card
-            _buildLoanDetailsCard(isTablet),
+        child: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Column(
+            children: [
+              // Loan Details Card
+              _buildLoanDetailsCard(context, isTablet),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            // Monthly EMI Result Card
-            _buildEmiResultCard(isTablet),
+              // Monthly EMI Result Card
+              _buildEmiResultCard(isTablet),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            // Payment Summary Card
-            Obx(
-              () => PaymentSummaryCards(
-                totalPayment: "₹${_formatNumber(controller.totalPayment)}",
-                tenureText: controller.isYear.value
-                    ? "Over ${controller.tenure.value.toInt()} year${controller.tenure.value.toInt() > 1 ? 's' : ''}"
-                    : "Over ${controller.tenure.value.toInt()} month${controller.tenure.value.toInt() > 1 ? 's' : ''}",
-                interestAmount: "₹${_formatNumber(controller.totalInterest)}",
-                interestPercent:
-                    "${controller.interestPercent.toStringAsFixed(1)}% of total amount",
+              // Payment Summary Card
+              Obx(
+                () => PaymentSummaryCards(
+                  totalPayment: "₹${_formatNumber(controller.totalPayment)}",
+                  tenureText: controller.isYear.value
+                      ? "Over ${controller.tenure.value.toInt()} year${controller.tenure.value.toInt() > 1 ? 's' : ''}"
+                      : "Over ${controller.tenure.value.toInt()} month${controller.tenure.value.toInt() > 1 ? 's' : ''}",
+                  interestAmount: "₹${_formatNumber(controller.totalInterest)}",
+                  interestPercent:
+                      "${controller.interestPercent.toStringAsFixed(1)}% of total amount",
+                ),
               ),
-            ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            // Payment Breakdown Section
-            _buildPaymentBreakdown(isTablet),
+              // Payment Breakdown Section
+              _buildPaymentBreakdown(isTablet),
 
-            SizedBox(height: 50),
-          ],
+              SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildLoanDetailsCard(bool isTablet) {
+  Widget _buildLoanDetailsCard(BuildContext context, bool isTablet) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Container(
       padding: EdgeInsets.all(isTablet ? 24 : 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -85,7 +90,7 @@ class EmiCalculatorScreen extends StatelessWidget {
               fontFamily: AppFonts.opensansRegular,
               fontWeight: FontWeight.bold,
               fontSize: isTablet ? 24 : 20,
-              color: AppColors.blackColor,
+              color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
           ),
 
@@ -319,14 +324,16 @@ class EmiCalculatorScreen extends StatelessWidget {
   }
 
   Widget _buildPaymentBreakdown(bool isTablet) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Container(
       padding: EdgeInsets.all(isTablet ? 24 : 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -341,7 +348,6 @@ class EmiCalculatorScreen extends StatelessWidget {
               fontSize: isTablet ? 22 : 18,
               fontWeight: FontWeight.bold,
               fontFamily: AppFonts.opensansRegular,
-              color: AppColors.blackColor,
             ),
           ),
 
@@ -395,7 +401,6 @@ class EmiCalculatorScreen extends StatelessWidget {
             fontFamily: AppFonts.opensansRegular,
             fontSize: isTablet ? 15 : 13,
             fontWeight: FontWeight.w600,
-            color: AppColors.blackColor,
           ),
         ),
       ],
@@ -440,7 +445,6 @@ class EmiCalculatorScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontFamily: AppFonts.opensansRegular,
                       fontSize: isTablet ? 15 : 13,
-                      color: Colors.grey[700],
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -449,8 +453,8 @@ class EmiCalculatorScreen extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: AppFonts.opensansRegular,
-                      color: AppColors.blackColor,
-                      fontSize: isTablet ? 20 : 18,
+                      color: AppColors.greenColor,
+                      fontSize: isTablet ? 20 : 15,
                     ),
                   ),
                 ],

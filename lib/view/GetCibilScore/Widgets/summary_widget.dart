@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../res/color/app_colors.dart';
 import '../../../res/fonts/app_fonts.dart';
+import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart';
 import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
 class SummaryWidget extends StatelessWidget {
@@ -10,6 +11,8 @@ class SummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserCibilScoreController controller =
+        Get.find<UserCibilScoreController>();
     final themeController = Get.find<ThemeController>();
     final bool isDark = themeController.isDarkMode.value;
     return Container(
@@ -84,6 +87,20 @@ class SummaryWidget extends StatelessWidget {
             },
           ),
 
+          const SizedBox(height: 14),
+
+          _actionTile(
+            color: AppColors.blueColor,
+            icon: Icons.trending_up,
+            title: 'Loan Application ',
+            subtitle: 'Verify Approval Chances',
+            onTap: () {
+              Get.toNamed(
+                RouteName.loanEligibiity,
+                arguments: controller.userId,
+              );
+            },
+          ),
           const SizedBox(height: 14),
 
           /// FOOTER

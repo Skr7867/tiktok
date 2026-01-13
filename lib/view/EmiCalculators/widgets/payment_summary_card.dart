@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../res/color/app_colors.dart';
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
 class PaymentSummaryCards extends StatelessWidget {
   final String totalPayment;
@@ -47,10 +51,12 @@ class PaymentSummaryCards extends StatelessWidget {
     required Color iconBg,
     required Color iconColor,
   }) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : Colors.white,
         borderRadius: BorderRadius.circular(14),
         boxShadow: const [
           BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),

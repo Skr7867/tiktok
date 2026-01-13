@@ -537,7 +537,7 @@ Widget _statusChip(String status, bool isDark) {
     icon = Icons.pending_actions;
   } else if (status == 'Submitted') {
     backgroundColor = const Color(0xffD1FAE5);
-    textColor = const Color(0xffffff);
+    textColor = Colors.green;
     icon = Icons.check_circle;
   } else {
     backgroundColor = Colors.grey.shade200;
@@ -585,7 +585,8 @@ Widget _statusChip(String status, bool isDark) {
 // ---------------- ACTION BUTTON ----------------
 Widget _actionButton(bool isDark) {
   return SizedBox(
-    width: 120,
+    width: 100,
+    height: 35,
     child: ElevatedButton.icon(
       onPressed: () {},
       icon: const Icon(Icons.visibility, size: 16),
@@ -600,8 +601,8 @@ Widget _actionButton(bool isDark) {
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xff3B82F6),
         foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 0,
       ),
     ),
