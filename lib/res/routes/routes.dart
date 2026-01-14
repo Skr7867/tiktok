@@ -8,6 +8,8 @@ import 'package:dsa/view/LoanEligibility/widgets/check_customer_loan_eligibility
 import 'package:dsa/view/Login/login_screen.dart';
 import 'package:dsa/view/Notification/notification_screen.dart';
 import 'package:dsa/view/Register/register_screen.dart';
+import 'package:dsa/view/StageTwoApplicationForm/stage_two_application_form.dart';
+import 'package:dsa/view/StageTwoApplicationForm/widgets/application_preview_screen.dart';
 import 'package:dsa/view/UserProfile/user_profile_screen.dart';
 import 'package:get/get.dart';
 import '../../view/GetCibilScore/LoanAccounts/loan_account_screen.dart';
@@ -114,6 +116,18 @@ class AppRoutes {
     GetPage(
       name: RouteName.applicationDetailsScreen,
       page: () => NetworkBasePage(child: ApplicationDetailsScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.stageTwoScreen,
+      page: () => NetworkBasePage(child: StageTwoScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.applicationPreviewScreen,
+      page: () => NetworkBasePage(child: ApplicationPreviewScreen()),
       transitionDuration: Duration(microseconds: 500),
       transition: Transition.rightToLeftWithFade,
     ),

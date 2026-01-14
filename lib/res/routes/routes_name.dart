@@ -16,4 +16,6 @@ class RouteName {
   static const String checkCustomerLoanEligibility =
       '/CheckCustomerLoanEligibility';
   static const String applicationDetailsScreen = '/ApplicationDetailsApiScreen';
+  static const String stageTwoScreen = '/StageTwoScreen';
+  static const String applicationPreviewScreen = '/ApplicationPrevieScreen';
 }

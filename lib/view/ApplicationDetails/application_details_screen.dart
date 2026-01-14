@@ -1,4 +1,6 @@
 import 'package:dsa/res/custom_widgets/custome_appbar.dart';
+import 'package:dsa/res/fonts/app_fonts.dart';
+import 'package:dsa/res/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -99,6 +101,7 @@ class ApplicationDetailsScreen extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
+                          fontFamily: AppFonts.opensansRegular,
                         ),
                       ),
 
@@ -109,16 +112,31 @@ class ApplicationDetailsScreen extends StatelessWidget {
                         width: double.infinity,
                         height: 46,
                         child: ElevatedButton.icon(
-                          onPressed: () {
-                            // TODO: Stage 2 navigation
-                          },
+                          onPressed:
+                              data.applicationStatus.currentStage == 'Submitted'
+                              ? null
+                              : () {
+                                  Get.toNamed(
+                                    RouteName.stageTwoScreen,
+                                    arguments: data.id,
+                                  );
+                                },
                           icon: const Icon(Icons.check_box_outlined, size: 18),
-                          label: const Text(
-                            'Continue Stage 2',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                          label: Text(
+                            data.applicationStatus.currentStage == 'Submitted'
+                                ? 'Submitted'
+                                : 'Continue Stage 2',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontFamily: AppFonts.opensansRegular,
+                            ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff2563EB),
+                            backgroundColor:
+                                data.applicationStatus.currentStage ==
+                                    'Submitted'
+                                ? Colors.orange
+                                : const Color(0xff2563EB),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

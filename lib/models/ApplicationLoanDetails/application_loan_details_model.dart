@@ -270,8 +270,20 @@ class DownPaymentCapability {
   DownPaymentCapability({required this.totalAmount, required this.sources});
 
   factory DownPaymentCapability.fromJson(Map<String, dynamic> json) {
+    // Handle both int and double for totalAmount
+    int parsedTotalAmount = 0;
+    if (json['totalAmount'] != null) {
+      if (json['totalAmount'] is int) {
+        parsedTotalAmount = json['totalAmount'];
+      } else if (json['totalAmount'] is double) {
+        parsedTotalAmount = json['totalAmount'].toInt();
+      } else if (json['totalAmount'] is String) {
+        parsedTotalAmount = int.tryParse(json['totalAmount']) ?? 0;
+      }
+    }
+
     return DownPaymentCapability(
-      totalAmount: json['totalAmount'] ?? 0,
+      totalAmount: parsedTotalAmount,
       sources: json['sources'] ?? [],
     );
   }
