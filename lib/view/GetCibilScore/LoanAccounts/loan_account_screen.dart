@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../models/CibilScore/cibil_score_model.dart';
+import '../../../res/color/app_colors.dart' show AppColors;
 import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart'
     show UserCibilScoreController;
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
 class LoanAccountScreen extends StatelessWidget {
   const LoanAccountScreen({super.key});
@@ -14,6 +16,8 @@ class LoanAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<UserCibilScoreController>();
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -42,15 +46,21 @@ class LoanAccountScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 16, left: 5, right: 5),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? AppColors.blackColor : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade200),
+                border: Border.all(color: AppColors.greyColor.withOpacity(0.5)),
+                boxShadow: [
+                  BoxShadow(color: AppColors.blackColor.withOpacity(0.4)),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildHeader(activeCount, accounts.length),
-                  const Divider(height: 1),
+                  Divider(
+                    height: 1,
+                    color: AppColors.greyColor.withOpacity(0.4),
+                  ),
 
                   /// 🔥 CRITICAL FIX — BOUNDED HEIGHT
                   Expanded(
@@ -127,8 +137,10 @@ class LoanAccountScreen extends StatelessWidget {
   // ================= TABLE HEAD =================
 
   Widget _buildTableHeadings() {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Container(
-      color: const Color(0xFFFBFBFB),
+      color: isDark ? Colors.black : Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: const [
@@ -176,7 +188,9 @@ class LoanAccountScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade100)),
+        border: Border(
+          bottom: BorderSide(color: AppColors.greyColor.withOpacity(0.4)),
+        ),
       ),
       child: Row(
         children: [

@@ -11,19 +11,24 @@ import 'package:get/get.dart';
 
 import '../../viewModels/controllers/CustomerRegistration/customer_mobile_verify_controller.dart';
 import '../../viewModels/controllers/CustomerRegistration/customer_registration_controller.dart';
+import '../../viewModels/controllers/Theme/theme_controller.dart';
 
 class CustomerRegistration extends StatelessWidget {
   const CustomerRegistration({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final customerRegistrationController =
-        Get.put(CustomerRegistrationController());
+    final customerRegistrationController = Get.put(
+      CustomerRegistrationController(),
+    );
     final customerMobileVerify = Get.put(CustomerMobileVerifyController());
-    final customerAadharVerify =
-        Get.put(CustomerAadharSendVerifyOtpController());
+    final customerAadharVerify = Get.put(
+      CustomerAadharSendVerifyOtpController(),
+    );
     final panVerifyController = Get.put(PanVerifyController());
     final locationVerifyController = Get.put(LocationController());
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -38,7 +43,9 @@ class CustomerRegistration extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: 100,
-                decoration: BoxDecoration(gradient: AppColors.primaryGradient),
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.blackColor : AppColors.buttonColor,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -46,19 +53,21 @@ class CustomerRegistration extends StatelessWidget {
                     Text(
                       'DSA Customer Registration',
                       style: TextStyle(
-                          fontSize: 20,
-                          color: AppColors.whiteColor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppFonts.helveticaBold),
+                        fontSize: 20,
+                        color: AppColors.whiteColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: AppFonts.helveticaBold,
+                      ),
                     ),
                     SizedBox(height: 6),
                     Text(
                       textAlign: TextAlign.center,
                       'Complete customer profile for credit\nassessment',
                       style: TextStyle(
-                          color: AppColors.whiteColor,
-                          fontFamily: AppFonts.helveticaBold),
-                    )
+                        color: AppColors.whiteColor,
+                        fontFamily: AppFonts.helveticaBold,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -66,16 +75,21 @@ class CustomerRegistration extends StatelessWidget {
                 margin: EdgeInsets.all(16),
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.loginContainerColor,
+                  color: isDark ? AppColors.blackColor : Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border:
-                      Border.all(color: AppColors.greyColor.withOpacity(0.2)),
+                  border: Border.all(
+                    color: AppColors.greyColor.withOpacity(0.2),
+                  ),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(.25))],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _label('Aadhar Linked Mobile Number *'),
                     CustomTextField(
+                      fillColor: isDark
+                          ? AppColors.blackColor
+                          : AppColors.loginContainerColor,
                       enabled: !customerMobileVerify.isPhoneVerified.value,
                       keyboardType: TextInputType.phone,
                       maxLength: 10,
@@ -86,10 +100,13 @@ class CustomerRegistration extends StatelessWidget {
                         () => customerMobileVerify.isPhoneVerified.value
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 4, vertical: 4),
+                                  horizontal: 4,
+                                  vertical: 4,
+                                ),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                    horizontal: 10,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.green.withOpacity(0.15),
                                     borderRadius: BorderRadius.circular(8),
@@ -122,30 +139,38 @@ class CustomerRegistration extends StatelessWidget {
                     _label("Customer's Complete Address *"),
                     Obx(() {
                       final canVerify = customerRegistrationController
-                          .canVerifyLocation.value;
+                          .canVerifyLocation
+                          .value;
 
                       return CustomTextField(
                         enabled: canVerify,
                         controller: locationVerifyController.locationController,
-                        fillColor: AppColors.whiteColor,
+                        fillColor: isDark
+                            ? AppColors.blackColor
+                            : AppColors.loginContainerColor,
                         prefixIcon: Icons.location_on_outlined,
                         hintText:
                             'Enter complete address with city, state, and PIN code',
                         fontSize: 12,
                         suffixIcon: canVerify
                             ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: locationVerifyController
-                                        .isLocationVerified.value
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 5,
+                                ),
+                                child:
+                                    locationVerifyController
+                                        .isLocationVerified
+                                        .value
                                     ? Container(
                                         margin: const EdgeInsets.only(right: 4),
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
+                                          horizontal: 10,
+                                        ),
                                         decoration: BoxDecoration(
                                           color: Colors.green.withOpacity(0.15),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                         child: const Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -168,18 +193,21 @@ class CustomerRegistration extends StatelessWidget {
                                         ),
                                       )
                                     : Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 4),
+                                        padding: const EdgeInsets.only(
+                                          right: 4,
+                                        ),
                                         child: RoundButton(
                                           fontSize: 11,
                                           width: 80,
                                           buttonColor: AppColors.blueColor,
                                           title: 'Verify',
                                           loading: locationVerifyController
-                                              .isLoading.value,
+                                              .isLoading
+                                              .value,
                                           onPress: () {
                                             if (!locationVerifyController
-                                                .isLoading.value) {
+                                                .isLoading
+                                                .value) {
                                               locationVerifyController
                                                   .locationVerify(context);
                                             }
@@ -205,16 +233,20 @@ class CustomerRegistration extends StatelessWidget {
                         suffixIcon: canVerifyAadhar
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 4, vertical: 4),
-                                child: customerAadharVerify
-                                        .isAadharVerified.value
+                                  horizontal: 4,
+                                  vertical: 4,
+                                ),
+                                child:
+                                    customerAadharVerify.isAadharVerified.value
                                     ? Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
+                                          horizontal: 10,
+                                        ),
                                         decoration: BoxDecoration(
                                           color: Colors.green.withOpacity(0.15),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                         child: const Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -238,15 +270,18 @@ class CustomerRegistration extends StatelessWidget {
                                       )
                                     : RoundButton(
                                         loading: customerAadharVerify
-                                            .isLoading.value,
+                                            .isLoading
+                                            .value,
                                         width: 80,
                                         buttonColor: AppColors.blueColor,
                                         title: 'Verify',
                                         onPress: () {
                                           if (!customerAadharVerify
-                                              .isLoading.value) {
-                                            customerAadharVerify
-                                                .aadharSendOtp(context);
+                                              .isLoading
+                                              .value) {
+                                            customerAadharVerify.aadharSendOtp(
+                                              context,
+                                            );
                                           }
                                         },
                                       ),
@@ -269,15 +304,19 @@ class CustomerRegistration extends StatelessWidget {
                         suffixIcon: canVerifyPan
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 4, vertical: 4),
+                                  horizontal: 4,
+                                  vertical: 4,
+                                ),
                                 child: panVerifyController.isPanVerified.value
                                     ? Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
+                                          horizontal: 10,
+                                        ),
                                         decoration: BoxDecoration(
                                           color: Colors.green.withOpacity(0.15),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                         child: const Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -307,9 +346,11 @@ class CustomerRegistration extends StatelessWidget {
                                         title: 'Verify',
                                         onPress: () {
                                           if (!panVerifyController
-                                              .isLoading.value) {
-                                            panVerifyController
-                                                .verifyPanCard(context);
+                                              .isLoading
+                                              .value) {
+                                            panVerifyController.verifyPanCard(
+                                              context,
+                                            );
                                           }
                                         },
                                       ),
@@ -326,7 +367,7 @@ class CustomerRegistration extends StatelessWidget {
               Obx(() {
                 final canSubmit =
                     customerRegistrationController.canSubmitCibil &&
-                        customerRegistrationController.canVerifyPan.value;
+                    customerRegistrationController.canVerifyPan.value;
 
                 return RoundButton(
                   loading: customerRegistrationController.isLoading.value,
@@ -392,7 +433,7 @@ class CustomerRegistration extends StatelessWidget {
                   ? (value) {
                       controller.agree.value = value ?? false;
                     }
-                  : null, // 🔒 disabled
+                  : null,
               activeColor: AppColors.blueColor,
             ),
             const SizedBox(width: 6),

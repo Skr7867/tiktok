@@ -1,10 +1,12 @@
 import 'package:dsa/res/color/app_colors.dart';
 import 'package:dsa/res/custom_widgets/custome_appbar.dart';
+import 'package:dsa/res/fonts/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../models/CibilScore/cibil_score_model.dart';
 import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart';
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
 class AccountsDetailsScreen extends StatelessWidget {
   const AccountsDetailsScreen({super.key});
@@ -12,6 +14,8 @@ class AccountsDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<UserCibilScoreController>();
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     final args = Get.arguments as Map<String, dynamic>?;
     final int selectedIndex = args?['accountIndex'] ?? 0;
 
@@ -50,7 +54,11 @@ class AccountsDetailsScreen extends StatelessWidget {
               children: [
                 Text(
                   '$activeCount active accounts out of ${accounts.length}',
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                    fontFamily: AppFonts.opensansRegular,
+                  ),
                 ),
                 const SizedBox(height: 16),
 
@@ -66,7 +74,9 @@ class AccountsDetailsScreen extends StatelessWidget {
                   title: 'Loan Tenure',
                   value:
                       '${account.dateOpened ?? '--'} - ${account.dateClosed ?? 'Invalid Date'}',
-                  bgColor: const Color(0xFFEFF5FF),
+                  bgColor: isDark
+                      ? AppColors.blackColor
+                      : const Color(0xFFEFF5FF),
                 ),
 
                 _infoCard(
@@ -75,7 +85,9 @@ class AccountsDetailsScreen extends StatelessWidget {
                   title: 'On Time Payments',
                   value:
                       '${account.monthlyHistory?.where((e) => e.status == "On Time").length ?? 0}',
-                  bgColor: const Color(0xFFEFFAF3),
+                  bgColor: isDark
+                      ? AppColors.blackColor
+                      : const Color(0xFFEFFAF3),
                 ),
 
                 _infoCard(
@@ -84,7 +96,9 @@ class AccountsDetailsScreen extends StatelessWidget {
                   title: 'Late Payments',
                   value:
                       '${account.monthlyHistory?.where((e) => e.status != "On Time").length ?? 0}',
-                  bgColor: const Color(0xFFFFF1F1),
+                  bgColor: isDark
+                      ? AppColors.blackColor
+                      : const Color(0xFFFFF1F1),
                 ),
 
                 _infoCard(
@@ -92,7 +106,9 @@ class AccountsDetailsScreen extends StatelessWidget {
                   iconColor: Colors.orange,
                   title: 'Months Reported',
                   value: '${account.monthsReported ?? 0}',
-                  bgColor: const Color(0xFFFFF8E6),
+                  bgColor: isDark
+                      ? AppColors.blackColor
+                      : const Color(0xFFFFF8E6),
                 ),
 
                 const SizedBox(height: 20),
@@ -100,7 +116,11 @@ class AccountsDetailsScreen extends StatelessWidget {
                 /// ================= FINANCIAL INFO =================
                 const Text(
                   'Financial Information',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: AppFonts.opensansRegular,
+                  ),
                 ),
                 const SizedBox(height: 12),
 
@@ -148,7 +168,11 @@ class AccountsDetailsScreen extends StatelessWidget {
           Expanded(
             child: Text(
               '${account.accountType ?? 'Loan'}\nDetails',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: AppFonts.opensansRegular,
+              ),
             ),
           ),
           Container(
@@ -167,6 +191,7 @@ class AccountsDetailsScreen extends StatelessWidget {
                     : Colors.grey,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
+                fontFamily: AppFonts.opensansRegular,
               ),
             ),
           ),
@@ -185,12 +210,20 @@ class AccountsDetailsScreen extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(fontSize: 13, color: Colors.grey),
+              style: const TextStyle(
+                fontSize: 13,
+
+                fontFamily: AppFonts.opensansRegular,
+              ),
             ),
           ),
           Text(
             value,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              fontFamily: AppFonts.opensansRegular,
+            ),
           ),
         ],
       ),
@@ -208,11 +241,19 @@ class AccountsDetailsScreen extends StatelessWidget {
           children: [
             const Text(
               'Monthly Payment History',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                fontFamily: AppFonts.opensansRegular,
+              ),
             ),
             Text(
               'Total: ${history.length} months',
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+                fontFamily: AppFonts.opensansRegular,
+              ),
             ),
           ],
         ),
@@ -249,7 +290,11 @@ class AccountsDetailsScreen extends StatelessWidget {
                       SizedBox(width: 6),
                       Text(
                         'Paid on Time',
-                        style: TextStyle(fontSize: 11, color: Colors.green),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.green,
+                          fontFamily: AppFonts.opensansRegular,
+                        ),
                       ),
                     ],
                   ),
@@ -264,25 +309,19 @@ class AccountsDetailsScreen extends StatelessWidget {
 
   Widget _additionalDetails(Accounts account) {
     return Container(
-      margin: EdgeInsets.only(bottom: 70),
+      margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.greyColor.withOpacity(0.3)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25), // shadow color
-            blurRadius: 1,
-          ),
-        ],
-      ),
+      decoration: _cardDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             'Additional Details',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              fontFamily: AppFonts.opensansRegular,
+            ),
           ),
           const SizedBox(height: 12),
           _financialTile('Ownership Type', account.ownership ?? 'NA'),
@@ -303,10 +342,7 @@ class AccountsDetailsScreen extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
+      decoration: _cardDecoration(),
       child: Row(
         children: [
           CircleAvatar(
@@ -318,12 +354,20 @@ class AccountsDetailsScreen extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                fontFamily: AppFonts.opensansRegular,
+              ),
             ),
           ),
           Text(
             value,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              fontFamily: AppFonts.opensansRegular,
+            ),
           ),
         ],
       ),
@@ -331,8 +375,10 @@ class AccountsDetailsScreen extends StatelessWidget {
   }
 
   BoxDecoration _cardDecoration() {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return BoxDecoration(
-      color: Colors.white,
+      color: isDark ? AppColors.blackColor : Colors.white,
       borderRadius: BorderRadius.circular(12),
       border: Border.all(color: AppColors.greyColor.withOpacity(0.4)),
       boxShadow: [

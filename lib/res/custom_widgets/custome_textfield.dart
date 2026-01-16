@@ -104,7 +104,7 @@ class CustomTextFieldState extends State<CustomTextField> {
                     _isPasswordVisible
                         ? (widget.passwordVisibleIcon ?? Icons.visibility_sharp)
                         : (widget.passwordInvisibleIcon ??
-                            Icons.visibility_off),
+                              Icons.visibility_off),
                     color: AppColors.textColor,
                   ),
                   onPressed: _togglePasswordVisibility,
@@ -128,9 +128,7 @@ class CustomTextFieldState extends State<CustomTextField> {
             borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
           disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.greyColor.withOpacity(0.3),
-            ),
+            borderSide: BorderSide(color: AppColors.greyColor.withOpacity(0.3)),
             borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
           focusedBorder: OutlineInputBorder(
@@ -142,8 +140,9 @@ class CustomTextFieldState extends State<CustomTextField> {
           counterText: '',
         ),
         style: TextStyle(
-            color: widget.textColor ?? Colors.black,
-            fontFamily: AppFonts.opensansRegular),
+          color: Theme.of(context).textTheme.bodyLarge?.color,
+          fontFamily: AppFonts.opensansRegular,
+        ),
       ),
     );
   }
