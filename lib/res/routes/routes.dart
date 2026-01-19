@@ -1,4 +1,5 @@
 import 'package:dsa/view/ApplicationDetails/application_details_screen.dart';
+import 'package:dsa/view/CamReport/cam_report_generate_screen.dart';
 import 'package:dsa/view/CustomerRegistration/customer_registration.dart';
 import 'package:dsa/view/EmiCalculators/emi_calculators_screen.dart';
 import 'package:dsa/view/FetchLoading/fetch_loading_screen.dart';
@@ -12,6 +13,7 @@ import 'package:dsa/view/StageTwoApplicationForm/stage_two_application_form.dart
 import 'package:dsa/view/StageTwoApplicationForm/widgets/application_preview_screen.dart';
 import 'package:dsa/view/UserProfile/user_profile_screen.dart';
 import 'package:get/get.dart';
+import '../../view/CamReport/cam_report_screen.dart';
 import '../../view/GetCibilScore/LoanAccounts/accounts_details_screen.dart';
 import '../../view/GetCibilScore/LoanAccounts/loan_account_screen.dart';
 import '../../view/GetCibilScore/get_cibil_score_screen.dart';
@@ -135,6 +137,18 @@ class AppRoutes {
     GetPage(
       name: RouteName.accountDetailsScreen,
       page: () => NetworkBasePage(child: AccountsDetailsScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.camReportScreen,
+      page: () => NetworkBasePage(child: CamReportScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.camReportGeneratorScreen,
+      page: () => NetworkBasePage(child: CamReportGenerateScreen()),
       transitionDuration: Duration(microseconds: 500),
       transition: Transition.rightToLeftWithFade,
     ),

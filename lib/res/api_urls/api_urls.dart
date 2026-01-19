@@ -30,4 +30,7 @@ class ApiUrls {
       '$baseUrl/api/loanRequest/stage1';
 
   static const String loanApplicationDetailsApi = '$baseUrl/api/loanRequest';
+  static const String camReportApi = '$baseUrl/api/cam/camByUser';
+
+  static const String camReportGenerateApi = '$baseUrl/api/cam/createCam';
 }

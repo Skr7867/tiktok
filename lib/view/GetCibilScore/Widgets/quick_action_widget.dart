@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../res/color/app_colors.dart';
 import '../../../res/fonts/app_fonts.dart';
+import '../../../res/routes/routes_name.dart' show RouteName;
 import '../../../viewModels/controllers/CibilScore/cibil_score_controller.dart';
 import '../../../viewModels/controllers/Theme/theme_controller.dart';
 
@@ -101,10 +102,10 @@ class QuickActionsCard extends StatelessWidget {
             title: 'CAM Report ',
             subtitle: 'Approval & Risk Assesment',
             onTap: () {
-              // Get.toNamed(
-              //   RouteName.loanEligibiity,
-              //   arguments: controller.userId,
-              // );
+              Get.toNamed(
+                RouteName.camReportScreen,
+                arguments: controller.userId,
+              );
             },
           ),
           const SizedBox(height: 12),
