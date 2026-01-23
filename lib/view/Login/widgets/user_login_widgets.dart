@@ -7,6 +7,8 @@ import 'package:dsa/viewModels/controllers/LoginSendOtp/login_send_otp_controlle
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
+
 class UserLoginWidgets extends StatelessWidget {
   const UserLoginWidgets({super.key});
 
@@ -14,18 +16,17 @@ class UserLoginWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginSendOtp = Get.put(LoginSendOtpController());
     double screenHight = MediaQuery.of(context).size.height;
-    // double screenWidth = MediaQuery.of(context).size.width;
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : Colors.white,
         borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: AppColors.greyColor.withOpacity(0.2)),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
+          BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4),
         ],
       ),
       child: Column(
@@ -36,14 +37,8 @@ class UserLoginWidgets extends StatelessWidget {
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-              color: const Color(0xFF1D6FE9),
+              color: isDark ? Colors.black : const Color(0xFF1D6FE9),
               borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF1D6FE9).withOpacity(0.3),
-                  blurRadius: 12,
-                ),
-              ],
             ),
             child: const Icon(
               Icons.person_outline,
@@ -109,10 +104,13 @@ class UserLoginWidgets extends StatelessWidget {
 
           // 🔹 Mobile Input
           CustomTextField(
+            fillColor: isDark ? Colors.black : Colors.white,
             controller: loginSendOtp.phoneController,
             keyboardType: TextInputType.phone,
             prefixIcon: Icons.phone,
             hintText: 'Enter 10 Digit Mobile Number',
+            maxLength: 10,
+            borderColor: AppColors.greyColor.withOpacity(0.4),
           ),
 
           const SizedBox(height: 20),

@@ -8,6 +8,7 @@ import 'package:dsa/viewModels/controllers/SendOtp/send_otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
 import 'otp_dialog_box.dart';
 
 class UserRegisterWidget extends StatelessWidget {
@@ -27,18 +28,17 @@ class UserRegisterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.blackColor : Colors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
+          BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 2),
         ],
       ),
       child: Column(
@@ -110,6 +110,7 @@ class UserRegisterWidget extends StatelessWidget {
           /// 🔹 Full Name
           _label('Full Name *'),
           CustomTextField(
+            fillColor: isDark ? Colors.black : AppColors.whiteColor,
             controller: userRegister.nameController,
             hintText: 'Enter your full name',
             prefixIcon: Icons.person_2_outlined,
@@ -121,6 +122,7 @@ class UserRegisterWidget extends StatelessWidget {
           /// 🔹 Phone Number
           _label('Phone Number *'),
           CustomTextField(
+            fillColor: isDark ? Colors.black : AppColors.whiteColor,
             controller: sendOtpController.phoneController,
             keyboardType: TextInputType.phone,
             maxLength: 10,
@@ -178,6 +180,7 @@ class UserRegisterWidget extends StatelessWidget {
           /// 🔹 Email Address
           _label('Email Address *'),
           CustomTextField(
+            fillColor: isDark ? Colors.black : AppColors.whiteColor,
             controller: userRegister.emailController,
             hintText: 'your@email.com',
             prefixIcon: Icons.email,
@@ -188,6 +191,7 @@ class UserRegisterWidget extends StatelessWidget {
           /// 🔹 Aadhar Number
           _label('Aadhar Number *'),
           CustomTextField(
+            fillColor: isDark ? Colors.black : AppColors.whiteColor,
             controller: userRegister.aadharController,
             hintText: '12 - digit Aadhar number',
             maxLength: 12,
@@ -200,6 +204,7 @@ class UserRegisterWidget extends StatelessWidget {
           /// 🔹 PAN Card
           _label('PAN Card Number *'),
           CustomTextField(
+            fillColor: isDark ? Colors.black : AppColors.whiteColor,
             controller: userRegister.panController,
             hintText: 'ABCDE1234F (EXAMPLE)',
             prefixIcon: Icons.credit_card,
@@ -208,6 +213,7 @@ class UserRegisterWidget extends StatelessWidget {
 
           _label('Business Location'),
           CustomTextField(
+            fillColor: isDark ? Colors.black : AppColors.whiteColor,
             controller: userRegister.locationController,
             hintText: 'Enter your business location',
             suffixIcon: IconButton(
@@ -245,6 +251,7 @@ class UserRegisterWidget extends StatelessWidget {
                 /// GST Number
                 _label('GST Number *'),
                 CustomTextField(
+                  fillColor: isDark ? Colors.black : AppColors.whiteColor,
                   controller: userRegister.gstController,
                   hintText: '22ABCDE1234F1Z5',
                   prefixIcon: Icons.receipt_long_outlined,
@@ -278,8 +285,7 @@ class UserRegisterWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: const Color(0xFFD0D5DD),
-                          style: BorderStyle.solid,
+                          color: AppColors.greyColor.withOpacity(0.2),
                         ),
                       ),
                       child: Column(
@@ -313,14 +319,14 @@ class UserRegisterWidget extends StatelessWidget {
                   }),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 50),
 
                 /// Document Requirements (small helper text)
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC),
+                    color: isDark ? Colors.black : const Color(0xFFF8FAFC),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Column(
@@ -469,7 +475,7 @@ class UserRegisterWidget extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: Color(0xFFD0D5DD)),
+          borderSide: BorderSide(color: AppColors.greyColor.withOpacity(0.2)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

@@ -2,6 +2,9 @@ import 'package:dsa/res/color/app_colors.dart';
 import 'package:dsa/res/fonts/app_fonts.dart';
 import 'package:dsa/view/Login/widgets/user_login_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../viewModels/controllers/Theme/theme_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -95,20 +98,23 @@ class LoginScreen extends StatelessWidget {
 
   // Feature Tile Widget
   Widget _featureTile({required IconData icon, required String title}) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFEFF6FF),
+        color: isDark ? AppColors.blackColor : const Color(0xFFEFF6FF),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFDDEAFE)),
+        border: Border.all(color: AppColors.greyColor.withOpacity(0.2)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: const Color(0xFFE0EDFF),
+              color: isDark ? Colors.black : const Color(0xFFE0EDFF),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: const Color(0xFF2563EB), size: 22),

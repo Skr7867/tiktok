@@ -4,6 +4,8 @@ import 'package:dsa/viewModels/controllers/LoginSendOtp/login_send_otp_controlle
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../viewModels/controllers/Theme/theme_controller.dart';
+
 class LoginOtpDialogBox extends StatefulWidget {
   const LoginOtpDialogBox({super.key});
 
@@ -66,7 +68,10 @@ class LoginOtpDialogBoxState extends State<LoginOtpDialogBox> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return Dialog(
+      backgroundColor: isDark ? AppColors.blackColor : const Color(0xFFEFF6FF),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -81,7 +86,7 @@ class LoginOtpDialogBoxState extends State<LoginOtpDialogBox> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEFF6FF),
+                    color: isDark ? Colors.black : const Color(0xFFEFF6FF),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -149,7 +154,8 @@ class LoginOtpDialogBoxState extends State<LoginOtpDialogBox> {
                 width: double.infinity,
                 height: 45,
                 child: ElevatedButton(
-                  onPressed: isVerifyEnabled &&
+                  onPressed:
+                      isVerifyEnabled &&
                           !loginSendOtpController.isVerifyingOtp.value
                       ? () {
                           loginSendOtpController.loginVerifyOtp(

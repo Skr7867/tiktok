@@ -817,7 +817,9 @@ class _HomeScreenState extends State<HomeScreen>
               context,
               icon: Icons.abc_outlined,
               title: 'About',
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(RouteName.aboutUsScreen);
+              },
             ),
             _buildDrawerItem(
               context,

@@ -1,3 +1,4 @@
+import 'package:dsa/view/AboutUs/about_us_screen.dart';
 import 'package:dsa/view/ApplicationDetails/application_details_screen.dart';
 import 'package:dsa/view/CamReport/cam_report_generate_screen.dart';
 import 'package:dsa/view/CustomerRegistration/customer_registration.dart';
@@ -149,6 +150,12 @@ class AppRoutes {
     GetPage(
       name: RouteName.camReportGeneratorScreen,
       page: () => NetworkBasePage(child: CamReportGenerateScreen()),
+      transitionDuration: Duration(microseconds: 500),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: RouteName.aboutUsScreen,
+      page: () => NetworkBasePage(child: AboutUsScreen()),
       transitionDuration: Duration(microseconds: 500),
       transition: Transition.rightToLeftWithFade,
     ),

@@ -21,4 +21,5 @@ class RouteName {
   static const String accountDetailsScreen = '/AccountDetailsScreen';
   static const String camReportScreen = '/CamReportScreen';
   static const String camReportGeneratorScreen = '/CamReportGeneratorScreen';
+  static const String aboutUsScreen = '/AboutUsScreen';
 }

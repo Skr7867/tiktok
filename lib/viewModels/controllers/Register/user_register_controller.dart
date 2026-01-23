@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:dsa/res/fonts/app_fonts.dart';
 import 'package:dsa/res/routes/routes_name.dart';
 import 'package:dsa/utils/utils.dart';
 import 'package:file_picker/file_picker.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../repository/UserRegister/user_register_repository.dart';
+import '../../../res/color/app_colors.dart';
+import '../Theme/theme_controller.dart';
 
 class UserRegisterController extends GetxController {
   final UserRegisterRepository _repo = UserRegisterRepository();
@@ -32,11 +35,13 @@ class UserRegisterController extends GetxController {
   // REGISTRATION TYPE
   // -------------------------------
   void showRegistrationTypeSheet() {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.blackColor : Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
@@ -48,8 +53,17 @@ class UserRegisterController extends GetxController {
   }
 
   Widget _sheetItem(String value) {
+    final themeController = Get.find<ThemeController>();
+    final bool isDark = themeController.isDarkMode.value;
     return ListTile(
-      title: Text(value),
+      title: Text(
+        value,
+        style: TextStyle(
+          fontFamily: AppFonts.opensansRegular,
+          color: isDark ? AppColors.whiteColor : AppColors.blackColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       onTap: () {
         registrationTypeController.text = value;
         selectedRegistrationType.value = value;
@@ -89,7 +103,11 @@ class UserRegisterController extends GetxController {
 
       final sizeInMB = file.lengthSync() / (1024 * 1024);
       if (sizeInMB > 5) {
-        Get.snackbar('Error', 'File size must be less than 5MB');
+        Get.snackbar(
+          'Info',
+          'File size must be less than 5MB',
+          backgroundColor: AppColors.blueColor,
+        );
         return;
       }
 
@@ -114,7 +132,7 @@ class UserRegisterController extends GetxController {
     if (isSubmitting.value) return;
 
     if (selectedRegistrationType.value.isEmpty) {
-      Utils.snackBar('Please select registration type', 'Error');
+      Utils.snackBar('Please select registration type', 'Info');
       return;
     }
 
@@ -134,7 +152,7 @@ class UserRegisterController extends GetxController {
       if (selectedRegistrationType.value == 'Business') {
         final file = businessDocument.value;
         if (file == null) {
-          Utils.snackBar('Please upload business document', 'Error');
+          Utils.snackBar('Please upload business document', 'Info');
           isSubmitting.value = false;
           return;
         }
@@ -164,7 +182,6 @@ class UserRegisterController extends GetxController {
       }
     } catch (e) {
       isSubmitting.value = false;
-      Get.snackbar('Error', e.toString());
       log(e.toString());
     }
   }
