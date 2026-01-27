@@ -130,7 +130,7 @@ class CheckEligibilityScreen extends StatelessWidget {
 
                           const SizedBox(height: 14),
 
-                          _label('Monthly Income (₹)'),
+                          _label('Monthly Income (₹) Min.15,000'),
                           _textField(
                             onChanged: (_) => controller.validateForm(),
                             controller: controller.incomeController,

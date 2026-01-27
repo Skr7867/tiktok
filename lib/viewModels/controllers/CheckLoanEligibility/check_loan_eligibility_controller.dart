@@ -74,7 +74,8 @@ class CheckEligibilityController extends GetxController {
           cibilController.cibilScore.value?.report?.userId?.sId;
 
       if (clientUserId == null) {
-        Get.snackbar('Error', 'Client user id not found');
+        // Get.snackbar('Error', 'Client user id not found');
+        log('Client id is not found ');
         return;
       }
 
@@ -85,14 +86,19 @@ class CheckEligibilityController extends GetxController {
 
       final formData = dio.FormData();
 
+      final occupation = selectedOccupation.value == 'Self Employed'
+          ? 'Self-Employed'
+          : 'Salaried';
+
       formData.fields.addAll([
         MapEntry('clientUserId', clientUserId),
         MapEntry('loanAmount', loanAmountController.text),
         MapEntry('loanTenureMonths', tenureMonths.toString()),
-        MapEntry('occupation', selectedOccupation.value!),
+        MapEntry('occupation', occupation),
         MapEntry('monthlyIncome', incomeController.text),
       ]);
 
+      /// ITR (required for both)
       if (itrFile.value != null) {
         formData.files.add(
           MapEntry(
@@ -105,16 +111,36 @@ class CheckEligibilityController extends GetxController {
         );
       }
 
-      for (final file in salarySlipFiles) {
-        formData.files.add(
-          MapEntry(
-            'salarySlips',
-            await dio.MultipartFile.fromFile(
-              file.path,
-              filename: file.path.split('/').last,
+      /// Salaried → salary slips
+      if (isSalaried) {
+        for (final file in salarySlipFiles) {
+          formData.files.add(
+            MapEntry(
+              'salarySlips',
+              await dio.MultipartFile.fromFile(
+                file.path,
+                filename: file.path.split('/').last,
+              ),
             ),
-          ),
-        );
+          );
+        }
+      }
+
+      /// Self-employed → GST + business proof
+      if (isSelfEmployed) {
+        formData.fields.add(MapEntry('gstNum', gstController.text.trim()));
+
+        if (businessProofFile.value != null) {
+          formData.files.add(
+            MapEntry(
+              'businessProof',
+              await dio.MultipartFile.fromFile(
+                businessProofFile.value!.path,
+                filename: businessProofFile.value!.path.split('/').last,
+              ),
+            ),
+          );
+        }
       }
 
       final dioClient = dio.Dio();
@@ -132,15 +158,11 @@ class CheckEligibilityController extends GetxController {
         },
       );
 
-      Get.snackbar(
-        'Success',
-        'Eligibility request submitted successfully',
-        snackPosition: SnackPosition.TOP,
-      );
+      Utils.snackBar('Eligibility request submitted successfully', 'Success');
 
       final applicationId = response.data?['data']?['loanRequestId'];
       Get.toNamed(RouteName.applicationDetailsScreen, arguments: applicationId);
-      Get.delete<CheckEligibilityController>();
+      // Get.delete<CheckEligibilityController>();
 
       log('✅ API RESPONSE: ${response.data}');
     } catch (e, st) {
