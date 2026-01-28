@@ -63,7 +63,7 @@ class Data {
       data['user'] = user!.toJson();
     }
     if (inputs != null) {
-      data['inputs'] = inputs!.toJson();
+      data['inputs'] = inputs!;
     }
     if (camReport != null) {
       data['camReport'] = camReport!.toJson();
@@ -102,27 +102,20 @@ class User {
 
 class Inputs {
   String? employmentType;
-  int? monthlyIncome;
-  InputOtherObligations? otherObligations; // Renamed to avoid conflict
+  double? monthlyIncome; // ✅ change to double
+  InputOtherObligations? otherObligations;
 
   Inputs({this.employmentType, this.monthlyIncome, this.otherObligations});
 
   Inputs.fromJson(Map<String, dynamic> json) {
     employmentType = json['employmentType'];
-    monthlyIncome = json['monthlyIncome'];
+
+    // ✅ SAFE conversion (handles int & double)
+    monthlyIncome = json['monthlyIncome']?.toDouble();
+
     otherObligations = json['otherObligations'] != null
         ? InputOtherObligations.fromJson(json['otherObligations'])
         : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['employmentType'] = employmentType;
-    data['monthlyIncome'] = monthlyIncome;
-    if (otherObligations != null) {
-      data['otherObligations'] = otherObligations!.toJson();
-    }
-    return data;
   }
 }
 
@@ -390,7 +383,7 @@ class AccountMix {
 }
 
 class IncomeDetails {
-  String? monthlyIncome;
+  int? monthlyIncome;
   String? employmentType;
   String? stabilityScore;
   int? monthlyDisposableIncome;

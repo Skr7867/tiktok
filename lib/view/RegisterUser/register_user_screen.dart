@@ -36,77 +36,137 @@ class RegisterUserScreen extends StatelessWidget {
           return CamReportSkeleton(isTablet: isTablet);
         }
 
-        final users = controller.usersList;
+        final users = controller.filteredUsers;
 
-        /// 🔹 EMPTY STATE
-        if (users.isEmpty) {
-          return const Center(child: Text('No registered users found'));
+        Widget _buildSearchBar(bool isDark) {
+          return Padding(
+            padding: const EdgeInsets.all(12),
+            child: TextField(
+              onChanged: (value) {
+                controller.searchText.value = value;
+              },
+              decoration: InputDecoration(
+                hintText: 'Search by name or phone',
+                hintStyle: TextStyle(
+                  fontFamily: AppFonts.opensansRegular,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
+                filled: true,
+                fillColor: isDark
+                    ? AppColors.blackColor.withOpacity(0.2)
+                    : Colors.grey.shade100,
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
+
+                // IMPORTANT PART
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: AppColors.greyColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: AppColors.greyColor.withOpacity(0.3),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: AppColors.greyColor.withOpacity(0.4),
+                  ),
+                ),
+              ),
+            ),
+          );
         }
 
         /// 🔹 USER LIST
-        return ListView.builder(
-          itemCount: users.length,
-          itemBuilder: (BuildContext context, int index) {
-            final user = users[index];
+        return Column(
+          children: [
+            _buildSearchBar(isDark),
 
-            final name = user.name ?? 'N/A';
-            final phone = user.phone?.toString() ?? '-';
-            final userId = user.sId;
+            Expanded(
+              child: users.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'No Registered users found',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: users.length,
+                      itemBuilder: (context, index) {
+                        final user = users[index];
 
-            return Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: isDark ? AppColors.blackColor : Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.greyColor.withOpacity(0.2)),
-              ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: AppColors.blueColor.withOpacity(0.1),
-                  child: Text(
-                    name.isNotEmpty ? name[0].toUpperCase() : 'U',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blueColor,
+                        final name = user.name ?? 'N/A';
+                        final phone = user.phone?.toString() ?? '-';
+                        final userId = user.sId;
+
+                        return Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: isDark ? AppColors.blackColor : Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: AppColors.greyColor.withOpacity(0.2),
+                            ),
+                          ),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: AppColors.blueColor.withOpacity(
+                                0.1,
+                              ),
+                              child: Text(
+                                name.isNotEmpty ? name[0].toUpperCase() : 'U',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.blueColor,
+                                  fontFamily: AppFonts.opensansRegular,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              name,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: AppFonts.opensansRegular,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                            subtitle: Text(
+                              phone,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.greyColor,
+                              ),
+                            ),
+                            trailing: RoundButton(
+                              onPress: userId == null
+                                  ? null
+                                  : () {
+                                      Get.toNamed(
+                                        RouteName.cibilScoreScreen,
+                                        arguments: {'userId': userId},
+                                      );
+                                    },
+                              buttonColor: AppColors.blueColor,
+                              height: 30,
+                              width: 90,
+                              fontSize: 12,
+                              title: 'See More',
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                ),
-                title: Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: AppFonts.opensansRegular,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                  ),
-                ),
-                subtitle: Text(
-                  phone,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: AppFonts.opensansRegular,
-                    color: AppColors.greyColor,
-                  ),
-                ),
-                trailing: RoundButton(
-                  onPress: userId == null
-                      ? null
-                      : () {
-                          /// 🔹 NAVIGATE WITH userId
-                          Get.toNamed(
-                            RouteName.cibilScoreScreen,
-                            arguments: {'userId': userId},
-                          );
-                        },
-                  buttonColor: AppColors.blueColor,
-                  height: 30,
-                  width: 90,
-                  fontSize: 12,
-                  title: 'See More',
-                ),
-              ),
-            );
-          },
+            ),
+          ],
         );
       }),
     );

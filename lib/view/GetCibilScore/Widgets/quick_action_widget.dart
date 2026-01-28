@@ -111,15 +111,14 @@ class QuickActionsCard extends StatelessWidget {
           const SizedBox(height: 12),
 
           /// REFRESH CIBIL
-          _actionTile(
-            color: Colors.yellow.shade600,
-            icon: Icons.refresh,
-            title: 'Refresh CIBIL',
-            subtitle: 'Update CIBIL information',
-            onTap: () {},
-            textColor: Colors.black,
-          ),
-
+          // _actionTile(
+          //   color: Colors.yellow.shade600,
+          //   icon: Icons.refresh,
+          //   title: 'Refresh CIBIL',
+          //   subtitle: 'Update CIBIL information',
+          //   onTap: () {},
+          //   textColor: Colors.black,
+          // ),
           const SizedBox(height: 14),
 
           /// FOOTER

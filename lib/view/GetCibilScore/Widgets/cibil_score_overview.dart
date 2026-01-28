@@ -68,10 +68,10 @@ class CibilScoreOverview extends StatelessWidget {
 
           /// GAUGE
           SizedBox(
-            height: 180,
+            height: 150,
             width: 260,
             child: Stack(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomCenter,
               children: [
                 CustomPaint(
                   size: const Size(290, 140),
@@ -80,10 +80,10 @@ class CibilScoreOverview extends StatelessWidget {
 
                 /// NEEDLE
                 Transform.rotate(
-                  angle: needleAngle * pi / 180,
+                  angle: needleAngle * pi / 5050,
                   child: Container(
-                    height: 190,
-                    width: 4,
+                    height: 300,
+                    width: 7,
                     decoration: BoxDecoration(
                       color: AppColors.blueColor,
                       borderRadius: BorderRadius.circular(4),
@@ -94,7 +94,7 @@ class CibilScoreOverview extends StatelessWidget {
                 /// CENTER DOT
                 Container(
                   height: 14,
-                  width: 14,
+                  width: 19,
                   decoration: BoxDecoration(
                     color: AppColors.blueColor,
                     shape: BoxShape.circle,
@@ -107,7 +107,11 @@ class CibilScoreOverview extends StatelessWidget {
           /// SCORE
           Text(
             '$score Score',
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              fontFamily: AppFonts.opensansRegular,
+            ),
           ),
 
           const SizedBox(height: 6),

@@ -550,7 +550,7 @@ class CamReportScreen extends StatelessWidget {
                         'Updated at: ${formatDate(controller.camReport.value?.data?.updatedAt)}',
                         style: TextStyle(
                           fontSize: isTablet ? 12 : 10,
-                          color: Colors.grey.shade300,
+                          color: AppColors.textColor,
                           fontFamily: AppFonts.opensansRegular,
                         ),
                       ),
@@ -801,7 +801,7 @@ class CamReportScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  '"Good credit standing with ₹17,62,282 borrowing capacity"',
+                  "Good credit standing with ₹${controller.report?.eligibility?.eligibleLoanAmount ?? 0} borrowing capacity",
                   style: TextStyle(
                     fontSize: isTablet ? 16 : 14,
                     fontWeight: FontWeight.w600,

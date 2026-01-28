@@ -1,7 +1,6 @@
 import 'package:dsa/res/custom_widgets/custome_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../res/color/app_colors.dart';
 import '../../res/fonts/app_fonts.dart';
 import '../../viewModels/controllers/CibilScore/cibil_score_controller.dart';

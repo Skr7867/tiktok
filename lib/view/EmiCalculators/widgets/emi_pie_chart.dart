@@ -1,3 +1,4 @@
+import 'package:dsa/res/fonts/app_fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,6 +48,7 @@ class EmiPieChart extends StatelessWidget {
                   title: "${interest.toStringAsFixed(1)}%",
                   titleStyle: const TextStyle(
                     color: Colors.white,
+                    fontFamily: AppFonts.opensansRegular,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     shadows: [Shadow(color: Colors.black26, blurRadius: 2)],
